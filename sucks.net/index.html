@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>friggin mechies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #33658A;
+        }
+        .button {
+            padding: 5px 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #F26419;
+        }
+        .menu {
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            right: 0;
+            top: 30px;
+            list-style: none;
+            padding: 10px;
+        }
+        .menu:hover .dropdown {
+            display: block;
+        }
+        .dropdown li {
+            padding: 5px 10px;
+        }
+        .dropdown li a {
+            text-decoration: none;
+            color: black;
+        }
+        .gif-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            padding: 20px;
+        }
+        .gif-placeholder {
+            width: 200px;
+            height: 200px;
+            background-color: #F6AE2D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>friggin mechies</h1>
+        <div class="menu">&#9776;
+            <ul class="dropdown">
+                <li><a href="#">Home</a></li>
+                <li><a href="www.keithsucks.store">Store</a></li>
+                <li><a href="www.keithsucks.info">About</a></li>
+                <li><a href="www.keithsucks.xyz">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <button class="button", onclick="changeGifs()">Learn to Solder</button>
+    <div class="gif-container">
+        <img class="gif-placeholder" src="gif1.gif" alt="GIF">
+        <img class="gif-placeholder" src="gif2.gif" alt="GIF">
+        <img class="gif-placeholder" src="gif3.gif" alt="GIF">
+        <img class="gif-placeholder" src="gif4.gif" alt="GIF">
+    </div>
+    <p><em>Welcome to keithsucks.net</em></p>
+    <div class="gif-container">
+        <img class="gif-placeholder" src="gif5.gif" alt="GIF">
+        <img class="gif-placeholder" src="gif6.gif" alt="GIF">
+        <img class="gif-placeholder" src="gif7.gif" alt="GIF">
+        <img class="gif-placeholder" src="gif8.gif" alt="GIF">
+    </div>
+    <button class="button", onclick="contentAware()">Learn 2 Solder</button>
+    <script>
+        const gifList = ["gif1.gif", "gif2.gif", "gif3.gif", "gif4.gif", "gif5.gif", "gif6.gif", "gif7.gif", "gif8.gif"];
+        function changeGifs() {
+            document.querySelectorAll(".gif-placeholder").forEach(img => {
+                let randomGif = gifList[Math.floor(Math.random() * gifList.length)];
+                img.src = randomGif;
+            });
+        }
+        function contentAware() {
+            const gif_9 = "gif9.gif";
+            document.querySelectorAll(".gif-placeholder").forEach(img => {
+                img.src = gif_9;
+            });
+        }
+    </script>
+</body>
+</html>
