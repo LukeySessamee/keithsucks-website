@@ -69,99 +69,6 @@
             display: block;
             width: 100%;
         }
-        .gif-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            justify-content: center;
-            margin: 0 auto;
-            max-width: 1200px;
-        }
-        .gif-placeholder {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 1/1;
-            max-width: 250px;
-            background-color: #F6AE2D;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            margin: 0 auto;
-            object-fit: cover;
-        }
-        .dancing-gif {
-            width: 100px;
-            height: 100px;
-            position: fixed;
-            z-index: 1;
-            display: none;
-        }
-        
-        /* Show dancing gifs only on larger screens */
-        @media (min-width: 768px) {
-            .dancing-gif {
-                display: block;
-            }
-            .top-left { left: 20px; top: 80px; }
-            .top-right { right: 20px; top: 80px; }
-            .bottom-left { left: 20px; bottom: 20px; }
-            .bottom-right { right: 20px; bottom: 20px; }
-        }
-        
-        .center-text {
-            font-size: clamp(2rem, 10vw, 5rem);
-            font-weight: bold;
-            color: #F26419;
-            text-align: center;
-            margin: 20px 10px;
-            padding: 0 10px;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            word-wrap: break-word;
-        }
-        .draggable {
-            width: 80px;
-            height: auto;
-            position: absolute;
-            bottom: 50px;
-            cursor: grab;
-            touch-action: none;
-        }
-        .glue-gun {
-            left: 30%;
-            transform: translateX(-50%);
-        }
-        .breadboard {
-            right: 30%;
-            transform: translateX(50%);
-        }
-        
-        @media (max-width: 767px) {
-            .gif-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                padding: 10px;
-            }
-            .button {
-                padding: 8px 16px;
-                margin: 10px;
-                font-size: 14px;
-            }
-            .draggable {
-                width: 60px;
-                bottom: 20px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .center-text {
-                margin: 15px 5px;
-            }
-            .draggable {
-                width: 50px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -177,124 +84,16 @@
         </div>
     </div>
     
-    <img class="dancing-gif top-left" src="keith_dance1.gif" alt="Dancing Guy 1">
-    <img class="dancing-gif top-right" src="keith_dance1.gif" alt="Dancing Guy 2">
-    <img class="dancing-gif bottom-left" src="keith-dance2-unscreen.gif" alt="Dancing Guy 3">
-    <img class="dancing-gif bottom-right" src="keith-dance2-unscreen.gif" alt="Dancing Guy 4">
-    
     <div class="center-text">KeithSucks.net</div>
     
     <button class="button" onclick="changeGifs()">Learn to Solder</button>
-    
-    <div class="gif-container">
-        <img class="gif-placeholder" src="gif1.gif" alt="GIF">
-        <img class="gif-placeholder" src="gif2.gif" alt="GIF">
-        <img class="gif-placeholder" src="gif3.gif" alt="GIF">
-        <img class="gif-placeholder" src="gif4.gif" alt="GIF">
-    </div>
-    
-    <p><em>Welcome to keithsucks.net</em></p>
-    
-    <div class="gif-container">
-        <img class="gif-placeholder" src="gif5.gif" alt="GIF">
-        <img class="gif-placeholder" src="gif6.gif" alt="GIF">
-        <img class="gif-placeholder" src="gif7.gif" alt="GIF">
-        <img class="gif-placeholder" src="gif8.gif" alt="GIF">
-    </div>
-    
     <button class="button" onclick="contentAware()">Learn 2 Solder</button>
-    
-    <img id="draggableGlueGun" class="draggable glue-gun" src="glue_gun.jpg" alt="Draggable Glue Gun">
-    <img id="draggableBreadboard" class="draggable breadboard" src="breadboard.jpg" alt="Draggable Breadboard">
+    <button class="button" onclick="redirectToInfo()">Go to Info Page</button>
     
     <script>
-        const gifList = ["gif1.gif", "gif2.gif", "gif3.gif", "gif4.gif", "gif5.gif", "gif6.gif", "gif7.gif", "gif8.gif", "womeninece.gif"];
-        function changeGifs() {
-            document.querySelectorAll(".gif-placeholder").forEach(img => {
-                let randomGif = gifList[Math.floor(Math.random() * gifList.length)];
-                img.src = randomGif;
-            });
+        function redirectToInfo() {
+            window.location.href = "https://keithsucks.net/info";
         }
-        function contentAware() {
-            document.querySelectorAll(".gif-placeholder").forEach(img => {
-                img.src = "gif9.gif";
-            });
-        }
-        
-        // Make elements draggable on both desktop and mobile
-        document.querySelectorAll(".draggable").forEach(el => {
-            // For mouse events (desktop)
-            el.onmousedown = dragStart;
-            
-            // For touch events (mobile)
-            el.ontouchstart = dragStart;
-            
-            function dragStart(e) {
-                e.preventDefault();
-                
-                // Get event coordinates based on device type
-                const pageX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-                const pageY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
-                
-                const rect = el.getBoundingClientRect();
-                const shiftX = pageX - rect.left;
-                const shiftY = pageY - rect.top;
-                
-                // Move function works for both mouse and touch
-                function moveAt(x, y) {
-                    const newX = x - shiftX;
-                    const newY = y - shiftY;
-                    
-                    // Keep element within viewport bounds
-                    const maxX = window.innerWidth - el.offsetWidth;
-                    const maxY = window.innerHeight - el.offsetHeight;
-                    
-                    el.style.left = Math.min(Math.max(0, newX), maxX) + 'px';
-                    el.style.top = Math.min(Math.max(0, newY), maxY) + 'px';
-                }
-                
-                // Different move handlers for mouse vs touch
-                function onMouseMove(e) {
-                    moveAt(e.clientX, e.clientY);
-                }
-                
-                function onTouchMove(e) {
-                    moveAt(e.touches[0].clientX, e.touches[0].clientY);
-                }
-                
-                // Add appropriate event listeners
-                if (e.type.includes('mouse')) {
-                    document.addEventListener('mousemove', onMouseMove);
-                    document.addEventListener('mouseup', function() {
-                        document.removeEventListener('mousemove', onMouseMove);
-                    });
-                } else {
-                    document.addEventListener('touchmove', onTouchMove);
-                    document.addEventListener('touchend', function() {
-                        document.removeEventListener('touchmove', onTouchMove);
-                    });
-                }
-            }
-            
-            // Prevent default drag behavior
-            el.ondragstart = () => false;
-        });
-        
-        // Handle dropdown menu for mobile tap
-        document.querySelector('.menu').addEventListener('touchend', function(e) {
-            const dropdown = this.querySelector('.dropdown');
-            if (dropdown.style.display === 'block') {
-                dropdown.style.display = 'none';
-            } else {
-                dropdown.style.display = 'block';
-                e.stopPropagation();
-            }
-        });
-        
-        // Close dropdown when tapping elsewhere
-        document.addEventListener('touchend', function() {
-            document.querySelector('.dropdown').style.display = 'none';
-        });
     </script>
 </body>
 </html>
