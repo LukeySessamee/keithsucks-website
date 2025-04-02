@@ -9,19 +9,13 @@
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #33658A;
-            position: relative;
-            height: 100vh;
             margin: 0;
-        }
-        .button {
-            padding: 10px 30px;
-            margin: 20px;
         }
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 15px;
             background-color: #F26419;
         }
         .menu {
@@ -38,8 +32,9 @@
             top: 40px;
             list-style: none;
             padding: 15px;
+            width: 150px;
         }
-        .menu:hover .dropdown {
+        .menu.active .dropdown {
             display: block;
         }
         .dropdown li {
@@ -48,60 +43,40 @@
         .dropdown li a {
             text-decoration: none;
             color: black;
+            display: block;
         }
         .gif-container {
             display: grid;
-            grid-template-columns: repeat(4, minmax(150px, 1fr));
-            gap: 20px;
-            padding: 40px;
-            justify-content: center;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 20px;
         }
         .gif-placeholder {
-            width: 250px;
-            height: 250px;
+            width: 100%;
+            height: auto;
             background-color: #F6AE2D;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 5px;
         }
-        .dancing-gif {
-            width: 250px;
-            height: 250px;
-            position: absolute;
-        }
-        .top-left { left: 20px; top: 20px; }
-        .top-right { right: 20px; top: 20px; }
-        .bottom-left { left: 20px; bottom: 20px; }
-        .bottom-right { right: 20px; bottom: 20px; }
         .center-text {
-            font-size: 80px;
+            font-size: 5vw;
             font-weight: bold;
             color: #F26419;
-            text-align: center;
-            margin-top: 40px;
+            margin-top: 20px;
             font-family: 'Comic Sans MS', cursive, sans-serif;
         }
-        .draggable {
-            width: 120px;
-            height: auto;
-            position: absolute;
-            bottom: 50px;
-            cursor: grab;
-        }
-        .glue-gun {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        .breadboard {
-            right: 40px;
+        .button {
+            padding: 10px 20px;
+            margin: 10px;
         }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>friggin mechies</h1>
-        <div class="menu">&#9776;
+        <div class="menu" onclick="toggleMenu()">&#9776;
             <ul class="dropdown">
                 <li><a href="#">Home</a></li>
                 <li><a href="https://www.keithsucks.store">Store</a></li>
@@ -110,11 +85,6 @@
             </ul>
         </div>
     </div>
-    
-    <img class="dancing-gif top-left" src="keith_dance1.gif" alt="Dancing Guy 1">
-    <img class="dancing-gif top-right" src="keith_dance1.gif" alt="Dancing Guy 2">
-    <img class="dancing-gif bottom-left" src="keith-dance2-unscreen.gif" alt="Dancing Guy 3">
-    <img class="dancing-gif bottom-right" src="keith-dance2-unscreen.gif" alt="Dancing Guy 4">
     
     <div class="center-text">KeithSucks.net</div>
     
@@ -127,21 +97,11 @@
         <img class="gif-placeholder" src="gif4.gif" alt="GIF">
     </div>
     
-    <p><em>Welcome to keithsucks.net</em></p>
-    
-    <div class="gif-container">
-        <img class="gif-placeholder" src="gif5.gif" alt="GIF">
-        <img class="gif-placeholder" src="gif6.gif" alt="GIF">
-        <img class="gif-placeholder" src="gif7.gif" alt="GIF">
-        <img class="gif-placeholder" src="gif8.gif" alt="GIF">
-    </div>
-    
-    <button class="button" onclick="contentAware()">Learn 2 Solder</button>
-    
-    <img id="draggableGlueGun" class="draggable glue-gun" src="glue_gun.jpg" alt="Draggable Glue Gun">
-    <img id="draggableBreadboard" class="draggable breadboard" src="breadboard.jpg" alt="Draggable Breadboard">
-    
     <script>
+        function toggleMenu() {
+            document.querySelector(".menu").classList.toggle("active");
+        }
+        
         const gifList = ["gif1.gif", "gif2.gif", "gif3.gif", "gif4.gif", "gif5.gif", "gif6.gif", "gif7.gif", "gif8.gif", "womeninece.gif"];
         function changeGifs() {
             document.querySelectorAll(".gif-placeholder").forEach(img => {
@@ -149,30 +109,6 @@
                 img.src = randomGif;
             });
         }
-        function contentAware() {
-            document.querySelectorAll(".gif-placeholder").forEach(img => {
-                img.src = "gif9.gif";
-            });
-        }
-        document.querySelectorAll(".draggable").forEach(el => {
-            el.onmousedown = function(event) {
-                let shiftX = event.clientX - el.getBoundingClientRect().left;
-                let shiftY = event.clientY - el.getBoundingClientRect().top;
-                function moveAt(pageX, pageY) {
-                    el.style.left = pageX - shiftX + 'px';
-                    el.style.top = pageY - shiftY + 'px';
-                }
-                function onMouseMove(event) {
-                    moveAt(event.pageX, event.pageY);
-                }
-                document.addEventListener('mousemove', onMouseMove);
-                el.onmouseup = function() {
-                    document.removeEventListener('mousemove', onMouseMove);
-                    el.onmouseup = null;
-                };
-            };
-            el.ondragstart = () => false;
-        });
     </script>
 </body>
 </html>
